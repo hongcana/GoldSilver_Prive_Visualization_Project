@@ -1,7 +1,11 @@
 import os
-import django
+import sys
+from django.core.files import File
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)) + '/app')))
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+import django
 django.setup()
 
 from PriceDashBoard.models import MaterialsPriceModel, MaterialsModel
