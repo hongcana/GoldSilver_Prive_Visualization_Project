@@ -1,0 +1,124 @@
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <h2>Gold & Silver Prices</h2>
+    <form method="GET" class="form-inline mb-3">
+      <div class="form-group mr-2">
+        <label for="start-date">Start Date:</label>
+        <input type="date" name="start_date" class="form-control mx-2" value="{{ start_date|default:'' }}">
+      </div>
+      <div class="form-group mr-2">
+        <label for="end-date">End Date:</label>
+        <input type="date" name="end_date" class="form-control mx-2" value="{{ end_date|default:'' }}">
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Gold Price</div>
+          <div class="card-body">
+            {% if gold_price_graph %}
+              <div class="text-center mb-3">
+                <img src="data:image/png;base64,{{ gold_price_graph }}" class="img-fluid" alt="Gold Price Graph">
+              </div>
+            {% else %}
+              <div class="alert alert-warning">No data available.</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Silver Price</div>
+          <div class="card-body">
+            {% if silver_price_graph %}
+              <div class="text-center mb-3">
+                <img src="data:image/png;base64,{{ silver_price_graph }}" class="img-fluid" alt="Silver Price Graph">
+              </div>
+            {% else %}
+              <div class="alert alert-warning">No data available.</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>분석 지표</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>자산명</th>
+          <th>가격</th>
+          <th>20% 상한</th>
+          <th>60% 상한</th>
+          <th>분석 결과</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in datas %}
+          <tr>
+            <td>{% if data.material_name_id == 1 %}Gold{% elif data.material_name_id == 2 %}Silver{% endif %}</td>
+            <td>{{ dataprice }}</td>
+            <td>{% if data.upper_20 == "1" %}Buy{% else %}Sell{% endif %}</td>
+            <td>{% if data.upper_60 == "1" %}Buy{% else %}Sell{% endif %}</td>
+            <td>{% if data.regular_array == "1" %}Buy{% else %}Sell{% endif %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{% block styles %}
+  <style>
+    .card-header {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .card-body {
+      min-height: 200px;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    img {
+      margin: 0 auto;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 1rem;
+      background-color: transparent;
+    }
+    th,
+    td {
+        padding: 0.5rem;
+        text-align: left;
+        vertical-align: middle;
+        border-top: 1px solid #dee2e6;
+    }
+    th {
+        font-weight: bold;
+        background-color: #f8f9fa;
+    }
+    tbody tr:nth-of-type(odd) {
+        background-color: #f2f2f2;
+    }
+    .buy {
+        color: green;
+        font-weight: bold;
+    }
+    .sell {
+        color: red;
+        font-weight: bold;
+    }
+  </style>
+{% endblock %}

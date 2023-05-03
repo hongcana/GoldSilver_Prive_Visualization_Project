@@ -5,7 +5,7 @@ class MaterialsModel(models.Model):
     material_name = models.CharField(max_length=200)
 
     def __str__(self):
-        return f'{self.material_name} info'
+        return f'{self.material_name}'
 
 
 class MaterialsPriceModel(models.Model):

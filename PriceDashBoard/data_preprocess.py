@@ -13,24 +13,24 @@ import pandas as pd
 import numpy as np
 
 def data_processing_feature(df):
-        df['20MA'] = df['price'].rolling(window = 20).mean()
-        df['60MA'] = df['price'].rolling(window = 60).mean()
-        df['120MA'] = df['price'].rolling(window= 120).mean()
-        df['200MA'] = df['price'].rolling(window= 200).mean()
-    
-        df.dropna(inplace=True)
-    
-        upper_20 = np.where(df['price'] > df['20MA'], 1, 0) # 1 = 매수, 0 = 매도 signal
-        upper_60 = np.where(df['price'] > df['60MA'], 1, 0) # 1 = 매수, 0 = 매도 signal
-        regular_array = np.where((df['20MA'] > df['60MA']) & (df['60MA'] > df['120MA']) & (df['120MA'] > df['200MA']), 1, 0)
-    
-        df['upper_20'] = upper_20
-        df['upper_60'] = upper_60
-        df['regular_array'] = regular_array
-    
-        df.drop(['20MA','60MA','120MA','200MA'], axis=1, inplace=True)
-    
-        return df
+    df['20MA'] = df['price'].rolling(window = 20).mean()
+    df['60MA'] = df['price'].rolling(window = 60).mean()
+    df['120MA'] = df['price'].rolling(window= 120).mean()
+    df['200MA'] = df['price'].rolling(window= 200).mean()
+
+    df.dropna(inplace=True)
+
+    upper_20 = np.where(df['price'] > df['20MA'], 1, 0) # 1 = 매수, 0 = 매도 signal
+    upper_60 = np.where(df['price'] > df['60MA'], 1, 0) # 1 = 매수, 0 = 매도 signal
+    regular_array = np.where((df['20MA'] > df['60MA']) & (df['60MA'] > df['120MA']) & (df['120MA'] > df['200MA']), 1, 0)
+
+    df['upper_20'] = upper_20
+    df['upper_60'] = upper_60
+    df['regular_array'] = regular_array
+
+    df.drop(['20MA','60MA','120MA','200MA'], axis=1, inplace=True)
+
+    return df
 
 def data_preprocess(material_id):
     """
@@ -50,8 +50,6 @@ def data_preprocess(material_id):
 
     print(data.iloc[-1].to_json(orient='columns'))
     return result_json
-
-data_preprocess(1)
 
 # 최종 목적
 # JSON 뱉어내는 것
