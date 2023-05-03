@@ -22,12 +22,6 @@ class GetAPITest(unittest.TestCase):
         df.columns = ['USD']
 
         output = get_price_data("gold")
-        print(output.index)
-        print(df.index)
-
-        print(output.columns)
-        print(df.columns)
-
         #처음 시작이되는 날짜 인덱스의 레코드와 비교
         self.assertTrue(output.head(1).equals(df))
 
@@ -43,7 +37,7 @@ class LoadPriceDataToDBTest(unittest.TestCase):
         silver_price_data = get_price_data('silver')
         gold_price_data = gold_price_data.loc[:yesterday]
         silver_price_data =silver_price_data.loc[:yesterday]
-        print(gold_price_data)
+        
 
         # 판다스 데이터 프레임을 장고 모델로 변환
         gold_data_list = []
@@ -97,8 +91,6 @@ class GetLatestDateFromDBTest(unittest.TestCase):
         after_n = 3
         gold_latest = MaterialsPriceModel.objects.filter(material_name_id=1).latest('date')
         silver_latest = MaterialsPriceModel.objects.filter(material_name_id=2).latest('date')
-        print(gold_latest)
-        print(silver_latest)
         
         # 금, 은 날짜가 같은 날 고시되었는지 확인.
         self.assertEqual(gold_latest.date, silver_latest.date)
