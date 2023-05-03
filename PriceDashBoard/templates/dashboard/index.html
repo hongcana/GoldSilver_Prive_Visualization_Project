@@ -2,6 +2,32 @@
 
 {% block content %}
   <div class="container">
+    <h1>분석 지표</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>자산명</th>
+          <th>가격</th>
+          <th>20일 이동평균선</th>
+          <th>60일 이동평균선</th>
+          <th>이동평균선 정배열</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in datas %}
+          <tr>
+            <td>{% if data.material_name_id == 1 %}Gold{% elif data.material_name_id == 2 %}Silver{% endif %}</td>
+            <td>{{ data.price }}</td>
+            <td>{% if data.upper_20 == 1 %}Buy{% else %}Sell{% endif %}</td>
+            <td>{% if data.upper_60 == 1 %}Buy{% else %}Sell{% endif %}</td>
+            <td>{% if data.regular_array == 1 %}Buy{% else %}Sell{% endif %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container">
     <h2>Gold & Silver Prices</h2>
     <form method="GET" class="form-inline mb-3">
       <div class="form-group mr-2">
@@ -46,31 +72,7 @@
     </div>
   </div>
 
-  <div class="container">
-    <h1>분석 지표</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>자산명</th>
-          <th>가격</th>
-          <th>20% 상한</th>
-          <th>60% 상한</th>
-          <th>분석 결과</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for data in datas %}
-          <tr>
-            <td>{% if data.material_name_id == 1 %}Gold{% elif data.material_name_id == 2 %}Silver{% endif %}</td>
-            <td>{{ dataprice }}</td>
-            <td>{% if data.upper_20 == "1" %}Buy{% else %}Sell{% endif %}</td>
-            <td>{% if data.upper_60 == "1" %}Buy{% else %}Sell{% endif %}</td>
-            <td>{% if data.regular_array == "1" %}Buy{% else %}Sell{% endif %}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+  
 {% endblock %}
 
 {% block styles %}

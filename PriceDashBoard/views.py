@@ -70,9 +70,12 @@ def index(request):
     else:
         end_date = datetime.today()
     
+    # 분석 지표 json 호출
+    gold_analysis_indicator = data_preprocess(1)
+    silver_analysis_indicator = data_preprocess(2)
+    
     try:
         gold_price_df, silver_price_df = _get_time_series_data(start_date, end_date)
-        
     
     except ValueError as e:
         error_message = str(e)
@@ -85,6 +88,7 @@ def index(request):
             'gold_price_graph': gold_price_graph,
             'silver_price_graph': silver_price_graph,
             'error_message': error_message,
+            'datas' :  [gold_analysis_indicator, silver_analysis_indicator]
         })
     
     # 이 구간의 금 / 은 가격 데이터프레임을 가져옴
@@ -93,13 +97,6 @@ def index(request):
     # 시각화 이미지를 encode한 값을 가져옴
     gold_price_visualization_img = _visualize_price_date(gold_price_df)
     silver_price_visualization_img = _visualize_price_date(silver_price_df)
-    
-    # 분석 지표 json 호출
-    gold_analysis_indicator = data_preprocess(1)
-    silver_analysis_indicator = data_preprocess(2)
-
-    print(gold_analysis_indicator)
-    print(silver_analysis_indicator)
     
     context = {
         'gold_price_graph' : gold_price_visualization_img,
