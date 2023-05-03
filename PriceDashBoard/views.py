@@ -7,6 +7,7 @@ from django.shortcuts import render
 from .data_preprocess import data_preprocess
 
 import matplotlib.pyplot as plt
+import seaborn as sns
 import pandas as pd
 import base64
 
@@ -35,11 +36,16 @@ def _get_time_series_data(start_date, end_date):
 
 def _visualize_price_date(price_df: pd.DataFrame):
     """입력된 데이터를 토대로 시각화 이미지를 만든 후 decode하는 함수"""
-    plt.figure(figsize=(10, 6))
+    
+    sns.set_style('darkgrid')
+    
+    plt.figure(figsize=(15, 7))
     plt.plot(price_df['price'])
     
-    plt.xlabel('Date')
-    plt.ylabel('Price ($)')
+    plt.xlabel('Date', fontsize=14)
+    plt.ylabel('Price ($)', fontsize=14)
+    
+    plt.xticks(rotation=30)
     
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
@@ -74,9 +80,12 @@ def index(request):
     gold_analysis_indicator = data_preprocess(1)
     silver_analysis_indicator = data_preprocess(2)
     
+    # 해당 일자의 데이터가 있는지 확인
     try:
         gold_price_df, silver_price_df = _get_time_series_data(start_date, end_date)
     
+    # 없다면 ValueError를 발생시켜 예외 처리
+    # 프론트 단에서 오류 메시지 출력할 수 있도록 error_message 추가
     except ValueError as e:
         error_message = str(e)
         gold_price_graph = None
@@ -98,6 +107,7 @@ def index(request):
     gold_price_visualization_img = _visualize_price_date(gold_price_df)
     silver_price_visualization_img = _visualize_price_date(silver_price_df)
     
+    # 이미지 / json 데이터를 전달하여 지표와 시각화 결과를 전송
     context = {
         'gold_price_graph' : gold_price_visualization_img,
         'silver_price_graph' : silver_price_visualization_img,

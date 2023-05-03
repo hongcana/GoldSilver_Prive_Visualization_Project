@@ -1,4 +1,6 @@
-{% load static %}
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
 
 {% block content %}
   <div class="container">
@@ -7,7 +9,7 @@
       <thead>
         <tr>
           <th>자산명</th>
-          <th>가격</th>
+          <th>가격 (달러)</th>
           <th>20일 이동평균선</th>
           <th>60일 이동평균선</th>
           <th>이동평균선 정배열</th>
@@ -16,16 +18,18 @@
       <tbody>
         {% for data in datas %}
           <tr>
-            <td>{% if data.material_name_id == 1 %}Gold{% elif data.material_name_id == 2 %}Silver{% endif %}</td>
+            <td>{% if data.material_name_id == 1 %}금{% elif data.material_name_id == 2 %}은{% endif %}</td>
             <td>{{ data.price }}</td>
-            <td>{% if data.upper_20 == 1 %}Buy{% else %}Sell{% endif %}</td>
-            <td>{% if data.upper_60 == 1 %}Buy{% else %}Sell{% endif %}</td>
-            <td>{% if data.regular_array == 1 %}Buy{% else %}Sell{% endif %}</td>
+            <td class="{% if data.upper_20 == 1 %}Buy{% else %}Sell{% endif %}">{% if data.upper_20 == 1 %}Buy{% else %}Sell{% endif %}</td>
+            <td class="{% if data.upper_60 == 1 %}Buy{% else %}Sell{% endif %}">{% if data.upper_60 == 1 %}Buy{% else %}Sell{% endif %}</td>
+            <td class="{% if data.regular_array == 1 %}Buy{% else %}Sell{% endif %}">{% if data.regular_array == 1 %}Buy{% else %}Sell{% endif %}</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+  
+  <BR>
 
   <div class="container">
     <h2>Gold & Silver Prices</h2>
@@ -38,10 +42,31 @@
         <label for="end-date">End Date:</label>
         <input type="date" name="end_date" class="form-control mx-2" value="{{ end_date|default:'' }}">
       </div>
+      <br>
       <button type="submit" class="btn btn-primary">Search</button>
     </form>
+    
+    <!-- 정규화 후 금/은 가격 추세 비교 그래프 추가할 부분
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-18">
+        <div class="card">
+          <div class="card-header">Gold / Silver Normalization Graph</div>
+          <div class="card-body">
+            {% if normalization_graph %}
+              <div class="text-center mb-3">
+                <img src="data:image/png;base64,{{ normalization_graph }}" class="img-fluid" alt="Normalization Graph">
+              </div>
+            {% else %}
+              <div class="alert alert-warning">No data available.</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    -->
+
+    <div class="row">
+      <div class="col-md-18">
         <div class="card">
           <div class="card-header">Gold Price</div>
           <div class="card-body">
@@ -55,7 +80,12 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+    </div>
+
+    <BR>
+
+    <div class="row">
+      <div class="col-md-18">
         <div class="card">
           <div class="card-header">Silver Price</div>
           <div class="card-body">
@@ -71,56 +101,76 @@
       </div>
     </div>
   </div>
-
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+     integrity="sha384-0KNlG+I5cZ5o5NY5A5D5pt5mGdHQm2jGW1rmxouEanvnskhBnx90CZ/ihPwpLYgQ"
+     crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   
 {% endblock %}
 
 {% block styles %}
   <style>
-    .card-header {
-      background-color: #007bff;
-      color: #fff;
-    }
+  .card-header {
+    background-color: #4e73df;
+    color: #fff;
+    font-size: 1.5em;
+    padding: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
 
-    .card-body {
-      min-height: 200px;
-    }
+  .card-body {
+    min-height: 300px;
+  }
 
-    .text-center {
-      text-align: center;
-    }
+  .text-center {
+    text-align: center;
+  }
 
-    img {
-      margin: 0 auto;
-    }
+  img {
+    margin: 0 auto;
+  }
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 1rem;
-      background-color: transparent;
-    }
-    th,
-    td {
-        padding: 0.5rem;
-        text-align: left;
-        vertical-align: middle;
-        border-top: 1px solid #dee2e6;
-    }
-    th {
-        font-weight: bold;
-        background-color: #f8f9fa;
-    }
-    tbody tr:nth-of-type(odd) {
-        background-color: #f2f2f2;
-    }
-    .buy {
-        color: green;
-        font-weight: bold;
-    }
-    .sell {
-        color: red;
-        font-weight: bold;
-    }
+  .container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    
+  }
+  
+  table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+  }
+  
+  th,
+  td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #808080;
+    color: white;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .Sell {
+    color: red;
+  }
+  
+  .Buy {
+    color: green;
+  }
   </style>
 {% endblock %}

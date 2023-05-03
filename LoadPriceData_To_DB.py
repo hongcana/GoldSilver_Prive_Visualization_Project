@@ -42,3 +42,6 @@ def main():
     bulk_price_data(silver_price_data, 'Silver')
     
     print('bulk 완료')
+    
+if __name__ == '__main__':
+    main()

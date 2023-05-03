@@ -38,3 +38,6 @@ def get_price_data(item_name, start_date='2013-01-01'):
 
     return price_data_from_2013
 
+if __name__ == '__main__':
+    get_price_data('gold')
+    get_price_data('silver')
