@@ -3,8 +3,8 @@ import sys
 from django.core.files import File
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)) + '/app')))
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+
 import django
 django.setup()
 
@@ -54,8 +54,5 @@ def data_preprocess(material_id):
     dict_json = json.loads(result_json)
     return dict_json
 
-data_preprocess(1)
 
-# 최종 목적
-# JSON 뱉어내는 것
-# {"material_name_id":1.0,"price":1995.4,"upper_20":0.0,"upper_60":1.0,"regular_array":1.0}
+# data_preprocess(1)
