@@ -11,6 +11,7 @@ django.setup()
 from PriceDashBoard.models import MaterialsPriceModel, MaterialsModel
 import pandas as pd
 import numpy as np
+import json
 
 def data_processing_feature(df):
         df['20MA'] = df['price'].rolling(window = 20).mean()
@@ -49,10 +50,12 @@ def data_preprocess(material_id):
     result_json = data.iloc[-1].to_json(orient='columns')
 
     print(data.iloc[-1].to_json(orient='columns'))
-    return result_json
+    
+    dict_json = json.loads(result_json)
+    return dict_json
 
 data_preprocess(1)
 
 # 최종 목적
 # JSON 뱉어내는 것
-# {'date' : 2023-04-28, '분석1':1, '분석2':1, '분석3':0}
+# {"material_name_id":1.0,"price":1995.4,"upper_20":0.0,"upper_60":1.0,"regular_array":1.0}
