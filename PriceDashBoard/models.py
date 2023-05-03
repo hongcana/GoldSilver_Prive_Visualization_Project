@@ -15,3 +15,6 @@ class MaterialsPriceModel(models.Model):
     
     def __str__(self):
         return f'{self.date} 자 {self.material_name} 가격 : {self.price}'
+    
+
+
