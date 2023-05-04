@@ -1,0 +1,131 @@
+{% load static %}
+
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+</head>
+
+{% block content %}
+  <div class="container">
+    <h1>분석 지표</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>자산명</th>
+          <th>가격 (달러)</th>
+          <th>20일 이동평균선</th>
+          <th>60일 이동평균선</th>
+          <th>이동평균선 정배열</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in datas %}
+          <tr>
+            <td>{% if data.material_name_id == 1 %}금{% elif data.material_name_id == 2 %}은{% endif %}</td>
+            <td>{{ data.price }}</td>
+            <td class="{% if data.upper_20 == 1 %}Buy{% else %}Sell{% endif %}">{% if data.upper_20 == 1 %}Buy{% else %}Sell{% endif %}</td>
+            <td class="{% if data.upper_60 == 1 %}Buy{% else %}Sell{% endif %}">{% if data.upper_60 == 1 %}Buy{% else %}Sell{% endif %}</td>
+            <td class="{% if data.regular_array == 1 %}Buy{% else %}Sell{% endif %}">{% if data.regular_array == 1 %}Buy{% else %}Sell{% endif %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+  <BR>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-18">
+        <div class="card">
+          <div class="card-header">Gold / Silver Scatter Graph</div>
+          <div class="card-body">
+            {% if scatter_graph %}
+              <div class="text-center mb-3">
+                <img src="data:image/png;base64,{{ scatter_graph }}" class="img-fluid" alt="Scatter Graph">
+              </div>
+            {% else %}
+              <div class="alert alert-warning">No data available.</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <BR>
+
+  <div class="container">
+    <h2>Gold & Silver Prices</h2>
+    <form method="GET" class="form-inline mb-3">
+      <div class="form-group mr-2">
+        <label for="start-date">Start Date:</label>
+        <input type="date" name="start_date" class="form-control mx-2" value="{{ start_date }}">
+      </div>
+      <div class="form-group mr-2">
+        <label for="end-date">End Date:</label>
+        <input type="date" name="end_date" class="form-control mx-2" value="{{ end_date }}">
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    
+    <div class="row">
+      <div class="col-md-18">
+        <div class="card">
+          <div class="card-header">Gold / Silver Normalization Graph</div>
+          <div class="card-body">
+            {% if normalization_graph %}
+              <div class="text-center mb-3">
+                <img src="data:image/png;base64,{{ normalization_graph }}" class="img-fluid" alt="Normalization Graph">
+              </div>
+            {% else %}
+              <div class="alert alert-warning">No data available.</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-18">
+        <div class="card">
+          <div class="card-header">Gold Price</div>
+          <div class="card-body">
+            {% if gold_price_graph %}
+              <div class="text-center mb-3">
+                <img src="data:image/png;base64,{{ gold_price_graph }}" class="img-fluid" alt="Gold Price Graph">
+              </div>
+            {% else %}
+              <div class="alert alert-warning">No data available.</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <BR>
+
+    <div class="row">
+      <div class="col-md-18">
+        <div class="card">
+          <div class="card-header">Silver Price</div>
+          <div class="card-body">
+            {% if silver_price_graph %}
+              <div class="text-center mb-3">
+                <img src="data:image/png;base64,{{ silver_price_graph }}" class="img-fluid" alt="Silver Price Graph">
+              </div>
+            {% else %}
+              <div class="alert alert-warning">No data available.</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+     integrity="sha384-0KNlG+I5cZ5o5NY5A5D5pt5mGdHQm2jGW1rmxouEanvnskhBnx90CZ/ihPwpLYgQ"
+     crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  
+{% endblock %}
+
