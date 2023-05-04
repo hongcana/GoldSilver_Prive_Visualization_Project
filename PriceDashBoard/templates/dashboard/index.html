@@ -1,5 +1,8 @@
+{% load static %}
+
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 </head>
 
 {% block content %}
@@ -30,23 +33,41 @@
   </div>
   
   <BR>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-18">
+        <div class="card">
+          <div class="card-header">Gold / Silver Scatter Graph</div>
+          <div class="card-body">
+            {% if scatter_graph %}
+              <div class="text-center mb-3">
+                <img src="data:image/png;base64,{{ scatter_graph }}" class="img-fluid" alt="Scatter Graph">
+              </div>
+            {% else %}
+              <div class="alert alert-warning">No data available.</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <BR>
 
   <div class="container">
     <h2>Gold & Silver Prices</h2>
     <form method="GET" class="form-inline mb-3">
       <div class="form-group mr-2">
         <label for="start-date">Start Date:</label>
-        <input type="date" name="start_date" class="form-control mx-2" value="{{ start_date|default:'' }}">
+        <input type="date" name="start_date" class="form-control mx-2" value="{{ start_date }}">
       </div>
       <div class="form-group mr-2">
         <label for="end-date">End Date:</label>
-        <input type="date" name="end_date" class="form-control mx-2" value="{{ end_date|default:'' }}">
+        <input type="date" name="end_date" class="form-control mx-2" value="{{ end_date }}">
       </div>
       <br>
       <button type="submit" class="btn btn-primary">Search</button>
     </form>
     
-    <!-- 정규화 후 금/은 가격 추세 비교 그래프 추가할 부분
     <div class="row">
       <div class="col-md-18">
         <div class="card">
@@ -63,7 +84,6 @@
         </div>
       </div>
     </div>
-    -->
 
     <div class="row">
       <div class="col-md-18">
@@ -109,68 +129,3 @@
   
 {% endblock %}
 
-{% block styles %}
-  <style>
-  .card-header {
-    background-color: #4e73df;
-    color: #fff;
-    font-size: 1.5em;
-    padding: 1rem;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .card-body {
-    min-height: 300px;
-  }
-
-  .text-center {
-    text-align: center;
-  }
-
-  img {
-    margin: 0 auto;
-  }
-
-  .container {
-    width: 80%;
-    margin: auto;
-    text-align: center;
-    font-size: 1.2em;
-    font-weight: bold;
-    
-  }
-  
-  table {
-    margin: 0 auto;
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-  }
-  
-  th,
-  td {
-    padding: 0.75rem;
-    vertical-align: middle;
-    text-align: center;
-  }
-  
-  th {
-    background-color: #808080;
-    color: white;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .Sell {
-    color: red;
-  }
-  
-  .Buy {
-    color: green;
-  }
-  </style>
-{% endblock %}
