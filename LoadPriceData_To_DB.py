@@ -30,8 +30,9 @@ def bulk_price_data(price_dataframe: pd.DataFrame, material_name: str):
             price_data_list.append(price_data)
             
         MaterialsPriceModel.objects.bulk_create(price_data_list)
-        
-    return
+    
+    # test case 적용
+    return True
 
 # 최초 bulk
 def main():
