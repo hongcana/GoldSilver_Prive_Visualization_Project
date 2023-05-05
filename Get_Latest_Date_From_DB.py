@@ -41,10 +41,9 @@ def bulk_data_after_latest_date(after_n=3):
         bulk_price_data(new_silver_price_data, 'Silver')
         
         print('최신 데이터 bulk 완료')
-        return
+        return True
     
     else:
         print(f'{after_n}일이 지나지 않음')
-        return
+        return False
 
-bulk_data_after_latest_date()

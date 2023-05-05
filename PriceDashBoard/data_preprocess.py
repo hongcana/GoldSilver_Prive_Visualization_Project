@@ -49,7 +49,7 @@ def data_preprocess(material_id):
 
     result_json = data.iloc[-1].to_json(orient='columns')
 
-    print(data.iloc[-1].to_json(orient='columns'))
+    # print(data.iloc[-1].to_json(orient='columns'))
     
     dict_json = json.loads(result_json)
     return dict_json
