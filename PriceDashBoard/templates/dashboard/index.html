@@ -34,18 +34,14 @@
   
   <BR>
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row ">
       <div class="col-md-18">
         <div class="card">
           <div class="card-header">Gold / Silver Scatter Graph</div>
           <div class="card-body">
-            {% if scatter_graph %}
-              <div class="text-center mb-3">
-                <img src="data:image/png;base64,{{ scatter_graph }}" class="img-fluid" alt="Scatter Graph">
-              </div>
-            {% else %}
-              <div class="alert alert-warning">No data available.</div>
-            {% endif %}
+            <div class="text-center mb-3">
+              <img src="data:image/png;base64,{{ scatter_graph }}" class="img-fluid" alt="Scatter Graph">
+            </div>
           </div>
         </div>
       </div>
