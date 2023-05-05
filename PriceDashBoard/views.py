@@ -21,6 +21,8 @@ def index(request):
     gold_analysis_indicator = data_preprocess(1)
     silver_analysis_indicator = data_preprocess(2)
     
+    scatter_visualization_img = _scatter_plot_graph()
+    
     # 해당 일자의 데이터가 있는지 확인
     try:
         gold_price_df, silver_price_df = _get_time_series_data(start_date, end_date)
@@ -32,7 +34,6 @@ def index(request):
         gold_price_graph = None
         silver_price_graph = None
         normalization_graph = None
-        scatter_graph = None
             
         return render(request, 'dashboard/index.html', {
             'start_date': start_date,
@@ -40,7 +41,7 @@ def index(request):
             'gold_price_graph': gold_price_graph,
             'silver_price_graph': silver_price_graph,
             'normalization_graph' : normalization_graph,
-            'scatter_graph': scatter_graph,
+            'scatter_graph': scatter_visualization_img,
             'error_message': error_message,
             'datas' :  [gold_analysis_indicator, silver_analysis_indicator]
         })
@@ -55,7 +56,7 @@ def index(request):
     gold_price_visualization_img = _visualize_price_data(gold_price_df)
     silver_price_visualization_img = _visualize_price_data(silver_price_df)
     normalization_visualization_img = _visualize_normalization_data(total_df)
-    scatter_visualization_img = _scatter_plot_graph()
+    
     
     # 이미지 / json 데이터를 전달하여 지표와 시각화 결과를 전송
     context = {
