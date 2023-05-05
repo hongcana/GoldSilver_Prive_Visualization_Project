@@ -30,19 +30,31 @@ def bulk_price_data(price_dataframe: pd.DataFrame, material_name: str):
             price_data_list.append(price_data)
             
         MaterialsPriceModel.objects.bulk_create(price_data_list)
+<<<<<<< HEAD
     
     # test case 적용
+=======
+
+    # test case 적용   
+>>>>>>> f8558b8a0241036debaa72ee3f8c871bb4af65a7
     return True
 
 # 최초 bulk
 def main():
+    print("시작합니다.")
     gold_price_data = get_price_data('gold')
     silver_price_data = get_price_data('silver')
     
+    print("벌크하겠습니다.")
     bulk_price_data(gold_price_data, 'Gold')
     bulk_price_data(silver_price_data, 'Silver')
     
     print('bulk 완료')
+<<<<<<< HEAD
     
 if __name__ == '__main__':
     main()
+=======
+
+
+>>>>>>> f8558b8a0241036debaa72ee3f8c871bb4af65a7
