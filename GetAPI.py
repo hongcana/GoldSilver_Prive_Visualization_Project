@@ -24,7 +24,7 @@ def get_price_data(item_name, start_date='2013-01-01'):
     
     # 전체 가격 데이터를 가져옴
     # 2013-01-01부터 최신까지
-    price_data = ndl.get(f'LBMA/{item_name}', start_date=start_date)
+    price_data = ndl.get(f'LBMA/{item_name}', start_date=start_date, api_key='EDGmffrbRvVhGiNJhxwi')
     
     # 원자재 종류에 따라 추출할 데이터 columns
     if item_name == 'GOLD':

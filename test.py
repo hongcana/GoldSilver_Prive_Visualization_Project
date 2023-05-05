@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, date
 from PriceDashBoard.models import MaterialsModel, MaterialsPriceModel
 import pandas as pd
 import unittest
+<<<<<<< HEAD
 from PriceDashBoard.data_preprocess import data_preprocess
 
 
@@ -15,6 +16,8 @@ class data_preprocess_test(unittest.TestCase):
         output = data_preprocess(1)
 
         self.assertEqual(output, expected)
+=======
+>>>>>>> f8558b8a0241036debaa72ee3f8c871bb4af65a7
 
 class GetAPITest(unittest.TestCase):
     def test_get_price_data(self):
@@ -106,3 +109,7 @@ class GetLatestDateFromDBTest(unittest.TestCase):
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f8558b8a0241036debaa72ee3f8c871bb4af65a7
