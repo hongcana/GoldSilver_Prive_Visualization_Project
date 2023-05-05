@@ -7,9 +7,14 @@ def normalize_column(df, column: str):
     :param column: 정규화할 column의 이름
     :return: 정규화된 column
     """
+
+    # 정규화 공식(데이터를 일정한 범위로 조정한다)
+    # 결과적으로 정규화된 값은 0과 1사이에 취하게 됨
     normalized_column = (df[column] - df[column].min()) / (df[column].max() - df[column].min())
     return normalized_column
 
+# 풀이 내용 확인
+# https://zambbon.tistory.com/entry/reduce%EC%99%80-lambda%EB%A5%BC-%ED%86%B5%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%ED%94%84%EB%A0%88%EC%9E%84-merge-%ED%95%A8%EC%88%98
 def merge_dataframes(df_list: list, merge_option: str, column: str):
     """
     여러 개의 DataFrame을 공통 column을 기준으로 병합하는 메소드.
