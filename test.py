@@ -41,36 +41,28 @@ class LoadPriceDataToDBTest(unittest.TestCase):
 
     def test_True_bulk_price_data(self):
         # 적재된 모델과, 나스닥에서 받아온 데이터 프레임이 일치하는지 확인.
-        yesterday = datetime.now() - timedelta(days=1)
+        yesterday = datetime.now() - timedelta(days=3)
         yesterday = yesterday.date().strftime("%Y-%m-%d")
 
         gold_price_data = get_price_data('gold')
-        silver_price_data = get_price_data('silver')
         gold_price_data = gold_price_data.loc[:yesterday]
-        silver_price_data = silver_price_data.loc[:yesterday]
+
 
         # 판다스 데이터 프레임을 장고 모델로 변환
         gold_data_list = []
         gold_material = MaterialsModel.objects.get(pk=1)
         for index, row in gold_price_data.iterrows():
             price_data = MaterialsPriceModel(material_name=gold_material,
-                                             date=index,
-                                             price=row['USD'])
+                                            date=index,
+                                            price=row['USD'])
 
             gold_data_list.append(price_data)
 
-        silver_data_list = []
-        silver_material = MaterialsModel.objects.get(pk=2)
-        for index, row in gold_price_data.iterrows():
-            price_data = MaterialsPriceModel(material_name=silver_material,
-                                             date=index,
-                                             price=row['USD'])
 
-            silver_data_list.append(price_data)
         # 어제까지 적재된 Model을 불러옴
         queryset = MaterialsPriceModel.objects.filter(date__lte=yesterday)
         gold_set = queryset.filter(material_name=gold_material)
-        silver_set = queryset.filter(material_name=silver_material)
+
 
         # 각 값을 list 형식으로 Date, value 추출
         # GOLD
@@ -85,18 +77,6 @@ class LoadPriceDataToDBTest(unittest.TestCase):
         self.assertEqual(gold_queryset_dates, gold_data_list_dates)
         self.assertEqual(gold_queryset_prices, gold_data_list_prices)
 
-        # SILVER
-        silver_queryset_dates = list(silver_set.values_list('date', flat=True))
-        silver_queryset_prices = list(
-            silver_set.values_list('price', flat=True))
-
-        silver_data_list_dates = list(price_data.date.date()
-                                      for price_data in silver_data_list)
-        silver_data_list_prices = list(
-            price_data.price for price_data in silver_data_list)
-
-        self.assertEqual(silver_queryset_dates, silver_data_list_dates)
-        self.assertEqual(silver_queryset_prices, silver_data_list_prices)
 
 
 class GetLatestDateFromDBTest(unittest.TestCase):

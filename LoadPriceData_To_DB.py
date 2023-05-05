@@ -24,8 +24,8 @@ def bulk_price_data(price_dataframe: pd.DataFrame, material_name: str):
         price_data_list = []
         for index, row in price_dataframe.iterrows():
             price_data = MaterialsPriceModel(material_name=material_id,
-                                             date=index,
-                                             price=row['USD'])
+                                            date=index,
+                                            price=row['USD'])
 
             price_data_list.append(price_data)
 
